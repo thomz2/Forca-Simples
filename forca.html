@@ -1,0 +1,71 @@
+<meta charset="UTF-8">
+<script>
+function mostra(texto){
+document.write(texto+"<br>");
+}
+
+function inn(letra, palavra, tam){
+    for (var i = 0; i < tam; ++i){
+        if (palavra[i] == letra) return true;
+    }return false;
+}
+
+function final(palavra){
+    var dec;
+    dec = parseInt(prompt("Deseja jogar novamente? (1 - Sim, 2 - Não) "));
+    if (dec == 1) return 1;
+    else {
+        mostra("A palavra era: " + palavra);
+        return 0;
+    }
+}
+
+const palavras = ["MELANCIA", "HELICOPTERO", "COMPUTADOR", "JAVASCRIPT", "BOLA", "TELEVISAO", "SORVETE", "PLANETA", "CELULAR", "CASA"];
+const dicas = ["É vermelho e doce", "Possui hélice", "Executa muitos processos matemáticos",
+               "Linguagem de programação", "É redondo", "Possui vários pixels", "É gelado", 
+               "Estamos em um", "É usado como meio de comunicação", "Usado como moradia"];
+var letras = [], sabeounao = "", indpalavra = parseInt(Math.random()*10000)%10, chances = 7, dica = false;
+var palavra = palavras[indpalavra];
+for (var i = 0; i < palavras.length; ++i){
+    sabeounao += '_';
+}
+var j = 0;
+while (chances != 0){
+    if (sabeounao == palavra){
+        mostra("Você ganhou!")
+        alert("Você ganhou!");
+        if (final(palavra) == 1) location.reload();
+        break;
+    }
+    if (chances == 1 && !dica) {
+        alert("Dica: " + dicas[indpalavra]);
+        dica = true;
+    }
+    alert("Você possui " + chances + " chances. Palavra: " + sabeounao + ". Letras usadas: " + letras);
+    var letra = prompt("Digite uma letra: ").toUpperCase();
+    if (letras.includes(letra)){
+        alert("Você já usou essa letra");
+    }else{
+        letras[j] = letra;
+        ++j;
+        if (!palavra.includes(letra)){
+            alert(letra + " Não está na palavra! -1 chance");
+            chances--;
+        }else{
+            aux = "";
+            for (var i = 0; i < palavra.length; ++i){
+                if (palavra[i] == letra){
+                    aux += letra;
+                }else{
+                    aux += sabeounao[i]
+                }
+            }sabeounao = aux;
+        }
+    }
+}
+if (chances == 0){
+    mostra("Você perdeu!");
+    alert("Você perdeu! A palavra era: " + palavra);
+    if (final(palavra) == 1) location.reload();
+}
+</script>
